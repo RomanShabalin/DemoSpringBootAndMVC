@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show Avenger</title>    
+</head>
+<body>
+
+<script type="text/javascript">
+function validate() {
+    x=document.getElementById("name")
+    x.disabled = !x.disabled;
+    x=document.getElementById("age")
+    x.disabled = !x.disabled;
+    x=document.getElementById("phone")
+    x.disabled = !x.disabled;
+    x=document.getElementById("save")
+    x.disabled = !x.disabled;
+    x=document.getElementById("delete")
+    x.disabled = !x.disabled;
+    x=document.getElementById("changeAuto")
+    x.disabled = !x.disabled;
+    x=document.getElementById("changeAddress")
+    x.disabled = !x.disabled;    
+}
+</script>
+
+<h2 th:text="${'Avenger: ' + avengers.name}">Avenger</h2> 
+</br>
+
+<h3 th:text="${'ID: ' + avengers.id}">ID</h3>
+
+<style>
+	.changes { display:inline-block; width:13%;	height:75px; }	
+</style>
+
+<form action="/avenger/update">
+	<div>
+		<h3>Name: <input type="text" name="name" id="name" th:value="${avengers.name}" disabled="disabled"/></h3>
+	</div>
+	<div>
+		<h3>Age: <input type="text" name="age" id="age" th:value="${avengers.age}" disabled="disabled"/></h3>
+	</div>
+	<div>
+		<h3>Phone: <input type="text" name="phone" id="phone" th:value="${avengers.phone}" disabled="disabled"/></h3>
+	</div>
+	<div>
+		 
+		
+		<h3>Address:</h3>
+		<ul>
+			<li th:each="address : ${avengers.address}">
+	        	<td th:text="${address.city}"></td>
+			</li>
+		</ul>
+		
+		<h3>Auto:</h3>
+		<ul>
+			<li th:each="auto : ${avengers.auto}">
+	        	<td th:text="${auto.brand}"></td>
+			</li>
+		</ul>
+	</div>
+	
+	<h3><input type="hidden" name="id" th:value="${avengers.id}"/>
+		<input type="button" value="Edit" onclick="return validate()"/>
+	    <input type="submit" value="Save" id="save" disabled="disabled"/></h3>
+</form>
+
+<form action="/avenger/delete">
+	<h3><input type="hidden" name="id" th:value="${avengers.id}"/>
+	   	<input type="submit" value="Delete" id="delete"/></h3>
+</form>
+
+<div class="changes">
+	<form action="/avenger/changeAddress" class="changeAddressBtn">
+	    <h3><input type="hidden" name="id" th:value="${avengers.id}"/>
+	    	<input type="submit" value="Change Addresses" id="changeAddress" disabled="disabled"/></h3>
+	</form>
+</div>
+
+<div class="changes">
+	<form action="/avenger/changeAuto">
+	    <h3><input type="hidden" name="id" th:value="${avengers.id}"/>
+	    	<input type="submit" value="Change Autos" id="changeAuto" disabled="disabled"/></h3>
+	</form>
+</div>
+
+</body>
+</html>

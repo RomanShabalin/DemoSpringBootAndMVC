@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show Address</title>    
+</head>
+<body>
+
+<script type="text/javascript">
+function validate() {
+	x=document.getElementById("address")
+    x.disabled = !x.disabled;
+    x=document.getElementById("add")
+    x.disabled = !x.disabled;
+    x=document.getElementById("addNewAddressInDB")
+    x.disabled = !x.disabled;
+    x=document.getElementById("delete")
+    x.disabled = !x.disabled;
+}
+
+function openCreateAddress() {
+	window.open('http://localhost:8080/address/createAddress')
+}
+
+function getAvengerId(el){
+	var v, n;
+	n=el.selectedIndex;
+	//value и text могут быть разными, при наличии value отправляется оно, если нет, то text
+	v=el[n].value;//value из оптиона
+	//v=el[n].text;//текст из оптиона
+	document.getElementById("idAvenger").value=v;
+};
+
+</script>
+
+<h2 th:text="${'Address of: ' + avengers.name}">Address of: </h2>
+
+<div class="form-group blu-margin">
+	<h2>Address:</h2>
+    <select class="form-control" id="id" name="id">
+    <option th:each="address : ${avengers.address}" th:text="${address.city}"></option>
+    </select>
+</div>
+</br>
+<input type="button" value="Add new Address" onclick="return validate()"/>
+
+<div class="form-group blu-margin">
+    <h2><select class="form-control" id="address" name="address" disabled="disabled" onchange="getAddressId(this);">
+		<option th:each="address : ${addresses}" th:text="${address.city}" th:value="${address.id}"></option>
+	</select></h2>
+	
+	<input type="text" name="idAvenger" id="idAvenger" th:value="${avengers.id}">
+	<input type="text" name="idAddress" id="idAddress">	
+</div>
+
+<form action="/address/add" method="post">	
+	<input type="submit" value="Add" id="add" disabled="disabled"/>
+</form>
+
+<h2><button type="submit" href="/createAddress" id="addNewAddressInDB" disabled="disabled" onclick="return openCreateAddress()">Add new Address in DB</button></h2>
+
+<form action="/avenger/delete/null">
+    <h2><input type="hidden" name="id" th:value="${avengers.id}"/>
+    	<input type="submit" value="Delete" id="delete"/></h2>
+</form>
+
+</br>
+
+</body>
+</html>

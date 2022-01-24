@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show Auto</title>    
+</head>
+<body>
+
+<script type="text/javascript">
+function validate() {
+	x=document.getElementById("auto")
+    x.disabled = !x.disabled;
+    x=document.getElementById("add")
+    x.disabled = !x.disabled;
+    x=document.getElementById("delete")
+    x.disabled = !x.disabled;
+}
+</script>
+
+<h2 th:text="${'Auto of: ' + avengers.name}">Auto of: </h2> 
+
+<form action="/auto">
+	<div class="form-group blu-margin">
+		<h2>Auto:</h2>
+	    <select class="form-control" id="id" name="id">
+	    <option th:each="auto : ${avengers.auto}" th:text="${auto.brand}"></option>
+	    </select>
+	</div>
+
+	<h2><input type="hidden" name="id" th:value="${avengers.id}"/>
+		<input type="button" value="Add new Auto" onclick="return validate()"/>
+		<input type="submit" value="Add" id="add" disabled="disabled"/></h2>
+	
+	
+	<div class="form-group blu-margin">
+		<!-- <h2>Auto:</h2> -->
+	    <select class="form-control" id="auto" name="auto" disabled="disabled">
+	    <option th:each="auto : ${autos}" th:text="${auto.brand}"></option>
+	    </select>
+	</div>
+	
+	
+</form>
+
+<form action="/avenger/delete">
+    <h2><input type="hidden" name="id" th:value="${avengers.id}"/>
+    	<input type="submit" value="Delete" id="delete"/></h2>
+</form>
+
+</br>
+
+</body>
+</html>
